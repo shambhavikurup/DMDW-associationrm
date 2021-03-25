@@ -36,6 +36,7 @@ support = []
 for each in presentIn:
     support.append(len(each))
 
+# sidenote:
 # apparently support(x) should be no. of transactions containing x / total no. of transactions
 # I haven't accounted for that. If we do go with that formula though, only a minor change required which is:
 # for i in range(numProducts):
@@ -45,7 +46,6 @@ for each in presentIn:
 # x is in
 # intersection is the list of common elements of presentIn[x] and presentIn[y], so basically
 # all the transaction IDs for transactions in which x and y both feature
-
 def findConfidence(x,y):
     intersection = [value for value in presentIn[x] if value in presentIn[y]]  
     lenIntersection = len(intersection)
