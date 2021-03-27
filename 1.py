@@ -34,7 +34,7 @@ for i in range(numProducts):
                 break
 support = []
 for each in presentIn:
-    support.append(len(each))
+    support.append(len(each)/range(transactions))
 
 # sidenote:
 # apparently support(x) should be no. of transactions containing x / total no. of transactions
