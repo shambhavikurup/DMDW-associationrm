@@ -1,3 +1,7 @@
+# Anjali Sajith         1020191420
+# Stuti Khandelwal      1020191308
+# Shambhavi Kurup       1020191577
+
 import random
 
 # transactions is a list of lists
@@ -57,10 +61,21 @@ def findFrequentItems(S):
     return frequentItems 
 
     
-def compare(confidence, lift):
-  big_confidence=0
-  for i in range(4):
-    if(big_confidence<confidence[i]):
-      big_confidence = confidence[i]
+# def compare(confidence, lift):
+#   big_confidence=0
+#   for i in range(4):
+#     if(big_confidence<confidence[i]):
+#       big_confidence = confidence[i]
       
     
+
+def main:
+    sup_threshold = 5
+    frequent = findFrequentItems(sup_threshold)
+    print("Frequent items when support threshold = " + sup_threshold + "is: " + frequent)
+    for product1 in products:
+        for product2 in products:
+            if (product1 != product2):
+                p1_p2 = findConfidence(product1, product2)
+                print("Likelihood of " + product2 + " being bought when " + product1 + " is bought is " + p1_p2)
+                
