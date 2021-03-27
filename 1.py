@@ -6,7 +6,6 @@ import random
 # so each transaction looks like this: transactions[i] = {TID, {itemset}}
 # so for i'th transaction, transactions[i][0] = TID, transaction[i][1] = {list of items}
 # list support: support[i] = number of transactions in which i features
-# ignore this line - transactions = [[0,[0]],[1,[0,1,2,4]],[2,[0,1]],[3,[0,1,4]],[4,[1,2]],[5,[0,1,3,4]],[6,[1]],[7,[0,2]],[8,[3,4]],[9,[0]]]
 # random.sample(range(x,y), z) generates a list of length z containing numbers in the range [x,y) without duplicates 
 
 
@@ -36,11 +35,6 @@ support = []
 for each in presentIn:
     support.append(len(each)/range(transactions))
 
-# sidenote:
-# apparently support(x) should be no. of transactions containing x / total no. of transactions
-# I haven't accounted for that. If we do go with that formula though, only a minor change required which is:
-# for i in range(numProducts):
-#     support[i] = support[i]/numTransactions
 
 # confidence(x,y) = number of transactions x and y are both in / those that only 
 # x is in
