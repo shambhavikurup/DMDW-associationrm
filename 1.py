@@ -59,12 +59,8 @@ def findFrequentItems(S):
     
 def compare(confidence, lift):
   big_confidence=0
-  big_lift=0
   for i in range(4):
     if(big_confidence<confidence[i]):
       big_confidence = confidence[i]
-      recommendItem = 
       
-  for i in range(4):
-    if(big_lift<lift[i]):
-      big_lift = lift[i]    
+    
