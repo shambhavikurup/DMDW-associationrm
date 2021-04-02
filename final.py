@@ -7,14 +7,14 @@ def generateDataset(numProducts, products, numTransactions):
         transactions[i+1] = sorted(randomProdList)
     return transactions
 
-def frequence(products, transaction):
+def frequence(products, transactions):
     products_count = dict() 
     for i in products:  #for every product that is present in the dataset 
-        if(len(products[i]=1)): 
+        if(len(products[i]==1)): 
             itemset = {i}
         else:
             itemset = set(i)     
-        for j in transaction.items():  #for every transaction
+        for j in transactions.items():  #for every transaction
             if itemset.issubset(set(j[1])):   #if the itemset is a subset of that transaction
                 if i in products_count:           
                     products_count[i] += 1       #the frequency of the itemset increases by 1
@@ -22,9 +22,9 @@ def frequence(products, transaction):
                     products_count[i] = 1        #otherwise it remains 1
     return products_count                        #return the frequency of each itemset
 
-def findSupport(itemsetCount, transaction):
+def findSupport(itemsetCount, transactions):
     support = dict()
-    totalTransactions = len(transaction)
+    totalTransactions = len(transactions)
     for i in itemsetCount:
         support[i] = itemsetCount[i]/totalTransactions
     return support
@@ -35,12 +35,9 @@ def main():
     numTransactions = 10
     transactions = generateDataset(numProducts, products, numTransactions)
 
-    for i in transactions.values():
-        numberOfTransactions = len(i) 
-    
     ListOfItems = set()
 
-     for i in transactions.values():
+    for i in transactions.values():
         for j in i:
             ListOfItems.add(j)
 
