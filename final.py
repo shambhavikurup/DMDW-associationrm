@@ -13,7 +13,7 @@ def frequence(items_list, trans):
                     items_count[i] += 1       #the frequency of the itemset increases by 1
                 else:
                     items_count[i] = 1        #otherwise it remains 1
-    return items_count                        #return the requency of each itemset
+    return items_count                        #return the frequency of each itemset
 
 
 def main():
