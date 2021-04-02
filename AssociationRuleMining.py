@@ -20,9 +20,9 @@ transactions = []
 
 # setting up randomly generated dataset
 for i in range(numTransactions):
-    transactions.append([i])
+    transaction.append([i])
     randomList = random.sample(range(0, 5), random.randint(1,numProducts)) 
-    transactions[i].append(sorted(randomList)) # is sorting necessary/advantageous?
+    transaction[i].append(sorted(randomList)) # is sorting necessary/advantageous?
 print(transactions)
 
 # setting up arrays presentIn and support
@@ -60,6 +60,12 @@ def findFrequentItems(S):
             frequentItems.append(i)
     return frequentItems 
 
+def findSupport(itemsetCount, transaction):
+    support = dict()
+    totalTransactions = len(transaction)
+    for i in itemsetCount:
+        support[i] = itemsetCount[i]/totalTransactions
+    return support
     
 # def compare(confidence, lift):
 #   big_confidence=0
@@ -69,8 +75,18 @@ def findFrequentItems(S):
       
     
 
-def main:
-    sup_threshold = 5
+def main(minimumSupport, minimumConfidence):
+    transactions = read_data()
+
+    for i in transactions.values():
+        numberOfTransactions = len(i) 
+    
+    ListOfItems = set()
+
+     for i in transactions.values():
+        for j in i:
+            ListOfItems.add(j)
+
     frequent = findFrequentItems(sup_threshold)
     print("Frequent items when support threshold = " + sup_threshold + "is: " + frequent)
     for product1 in products:
