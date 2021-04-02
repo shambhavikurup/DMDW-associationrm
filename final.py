@@ -1,15 +1,11 @@
 import random
-def read_data():
-    numProducts = 5
-    products = list(range(1, numProducts+1))
-    print(products)
-    numTransactions = 10
-    transactions = dict()
 
+def generateDataset(numProducts, products, numTransactions):
+    transactions = dict()
     for i in range(numTransactions):
         randomProdList = random.sample(products, random.randint(1,numProducts)) 
         transactions[i+1] = sorted(randomProdList)
-    print(transactions)
+    return transactions
 
 def frequence(items_list, trans):
     items_count = dict() 
@@ -34,7 +30,10 @@ def findSupport(itemsetCount, transaction):
     return support
 
 def main():
-    transactions = read_data()
+    numProducts = 5
+    products = list(range(1, numProducts+1))
+    numTransactions = 10
+    transactions = generateDataset(numProducts, products, numTransactions)
 
     for i in transactions.values():
         numberOfTransactions = len(i) 
