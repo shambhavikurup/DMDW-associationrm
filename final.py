@@ -16,7 +16,7 @@ def frequence(products, transaction):
             itemset = set(i)     
         for j in transaction.items():  #for every transaction
             if itemset.issubset(set(j[1])):   #if the itemset is a subset of that transaction
-                if i in productss_count:           
+                if i in products_count:           
                     products_count[i] += 1       #the frequency of the itemset increases by 1
                 else:
                     products_count[i] = 1        #otherwise it remains 1
