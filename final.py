@@ -21,10 +21,6 @@ def frequence(itemsets, transactions):
                     itemsetFreq[itemset] += 1       
                 else:
                     itemsetFreq[itemset] = 1 
-    infrequent = itemsets - itemsetFreq
-    print("frequent:")
-    print(itemsetFreq)
-    print(infrequent)
     return itemsetFreq                                   # return a dict with frequency of each itemset {itemset: frequency}
 
 def findSupport(itemsetCount, transactions):
@@ -33,8 +29,15 @@ def findSupport(itemsetCount, transactions):
         support[i] = itemsetCount[i]/len(transactions)
     return support
 
+
+def check(itemsetSupport, minSupport):
+    print(itemsetSupport.values())
+    for itemset in itemsetSupport:
+        
+
+
 def main():
-    minSupport=0.1
+    minSupport=0.6
     numProducts = 5
     products = set(range(1, numProducts+1))              # items_lst;
     numTransactions = 10
@@ -43,8 +46,10 @@ def main():
     for i in range(1,numTransactions+1):
         listItemsInTransactions.append(len(transactions[i]))
 
-    allCandidates = list()
-    for i in range(1, max(listItemsInTransactions)+1):
+    #setting up all Candidates
+    allCandidates = []
+    allCandidates.append(products)
+    for i in range(2, max(listItemsInTransactions)+1):
         candidateItemsetList = set(combinations(products, i))
         allCandidates.append(candidateItemsetList)
 
@@ -57,21 +62,19 @@ def main():
         if i[1]>minSupport:
             frequentItemsets.append({i[0]:i[1]})
     
-    # so frequentItemsets is a list that contains elements of the form {item:support} for frequent itemsets. For now, it only
-    # contains frequent itemsets of size 1 (basically singular items)
 
-    # tempFreq = []               #[1,2,3,4,5]
-    # for i in frequentItemsets:
-    #     for itemset in i:
-    #         tempFreq.append(itemset)    
-    
-    # itemList = combinations(tempFreq, 2)
-        for i in range(len(allCandidates))
-            itemFrequency = frequence(allCandidates[i], transactions)
+    print(allCandidates)
+    for i in range(0,len(allCandidates)):
+        itemFrequency = frequence(allCandidates[i], transactions)
+        #print(itemFrequency)
+        itemsetSupport = findSupport(itemFrequency, transactions)
+        #print(itemsetSupport)
+        check(itemsetSupport, minSupport)
 
-        itemsetFreqHistory.append(itemFrequency)
-        if list({j[0]:j[1] for j in findSupport(itemFrequency, transactions).items() if j[1]>minSupport}.keys()) != []:
-            frequentItemsets.append({j[0]:j[1] for j in findSupport(itemFrequency, transactions).items() if j[1]>minSupport})
+
+    itemsetFreqHistory.append(itemFrequency)
+    if list({j[0]:j[1] for j in findSupport(itemFrequency, transactions).items() if j[1]>minSupport}.keys()) != []:
+        frequentItemsets.append({j[0]:j[1] for j in findSupport(itemFrequency, transactions).items() if j[1]>minSupport})
 
     #print(frequentItemsets)
 
