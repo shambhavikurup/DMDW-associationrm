@@ -1,4 +1,5 @@
 import random
+from itertools import combinations
 
 def generateDataset(numProducts, products, numTransactions):
     transactions = dict()
@@ -7,38 +8,67 @@ def generateDataset(numProducts, products, numTransactions):
         transactions[i+1] = sorted(randomProdList)
     return transactions
 
-def frequence(products, transactions):
-    products_count = dict() 
-    for i in products:  #for every product that is present in the dataset 
-        if(len(products[i]==1)): 
-            itemset = {i}
+def frequence(itemsets, transactions):
+    itemsetFreq = dict() 
+    for itemset in itemsets:  #itemset is a tuple when itemsets of size>1 are taken
+        if isinstance(itemset,int): #will be true only for itemsets of size 1
+            temp = set([itemset])
         else:
-            itemset = set(i)     
-        for j in transactions.items():  #for every transaction
-            if itemset.issubset(set(j[1])):   #if the itemset is a subset of that transaction
-                if i in products_count:           
-                    products_count[i] += 1       #the frequency of the itemset increases by 1
+            temp = set(itemset)
+        for transaction in transactions.items():        # for every transaction; transaction[0] = TID, transaction[1] = transaction's itemset
+            if temp.issubset(set(transaction[1])):      # if the itemset is a subset of the itemset in transaction, increase count of frequency by 1
+                if itemset in itemsetFreq:           
+                    itemsetFreq[itemset] += 1       
                 else:
-                    products_count[i] = 1        #otherwise it remains 1
-    return products_count                        #return the frequency of each itemset
+                    itemsetFreq[itemset] = 1 
+    return itemsetFreq                                   # return a dict with frequency of each itemset {itemset: frequency}
 
 def findSupport(itemsetCount, transactions):
     support = dict()
-    totalTransactions = len(transactions)
     for i in itemsetCount:
-        support[i] = itemsetCount[i]/totalTransactions
+        support[i] = itemsetCount[i]/len(transactions)
     return support
 
 def main():
+    minSupport=0.1
     numProducts = 5
-    products = list(range(1, numProducts+1))
+    products = set(range(1, numProducts+1))              # items_lst;
     numTransactions = 10
     transactions = generateDataset(numProducts, products, numTransactions)
+    listItemsInTransactions = [] #array of number of items bought in every transaction
+    for i in range(1,numTransactions+1):
+        listItemsInTransactions.append(len(transactions[i]))
 
-    ListOfItems = set()
 
-    for i in transactions.values():
-        for j in i:
-            ListOfItems.add(j)
+    print(transactions)
+    frequentItemsets = []                                   # items_grater_then_min_support;
+    itemsetFreqHistory = []                              # itemcount_track; so itemsetFreqHistory is be a dictionary of itemsets of size i and their respective frequency
+    itemFrequency = frequence(products, transactions)    # items_counts; itemFrequency is a dict of item:frequency for every item in products
+    itemsetFreqHistory.append(itemFrequency)
+    for i in findSupport(itemFrequency, transactions).items(): # i is (item:support), i[0]=item, i[1]=support of the item
+        if i[1]>minSupport:
+            frequentItemsets.append({i[0]:i[1]})
+
+    # so frequentItemsets is a list that contains elements of the form {item:support} for frequent itemsets. For now, it only
+    # contains frequent itemsets of size 1 (basically singular items)
+
+    # tempFreq = []               #[1,2,3,4,5]
+    # for i in frequentItemsets:
+    #     for itemset in i:
+    #         tempFreq.append(itemset)    
+    
+    # itemList = combinations(tempFreq, 2)
+
+    for i in range(2, max(listItemsInTransactions)+1):
+        candidateItemsetList = set(combinations(products, i))
+        print(candidateItemsetList)
+        itemFrequency = frequence(candidateItemsetList, transactions)
+        itemsetFreqHistory.append(itemFrequency)
+        if list({j[0]:j[1] for j in findSupport(itemFrequency, transactions).items() if j[1]>minSupport}.keys()) != []:
+            frequentItemsets.append({j[0]:j[1] for j in findSupport(itemFrequency, transactions).items() if j[1]>minSupport})
+
+    #print(frequentItemsets)
+
+
 
 main()
